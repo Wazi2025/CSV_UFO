@@ -2,7 +2,7 @@ using System.Globalization;
 
 public class CsvFileReader
 {
-    //static public string path = @"D:\VSCode\CSharp\CSV_UFO\scrubbed.csv";
+    //static public string filePath = @"D:\VSCode\CSharp\CSV_UFO\Data\scrubbed.csv";
 
 
     static public DateTime ConvertToDateTime(string stringDate)
@@ -65,14 +65,20 @@ public class CsvFileReader
         return result;
     }
 
-    static public void ReadFile()
+    public void ReadFile()
     {
+        #region
+        //Something isn't right here. It works fine when debugging but crashes when running the compiled exe by itself
+        //Update: the compiler seems to be looking for the Data dir in D:\VSCode\CSharp\CSV_UFO\bin\Release and not D:\VSCode\CSharp\CSV_UFO\bin\Release\net9.0\win-x64\publish (where the published
+        // .exe actually is. ????)
+
         //Set the application path
-        var projectRoot = Directory.GetParent(AppContext.BaseDirectory)!.Parent!.Parent!.Parent!.FullName;
+        string projectRoot = Directory.GetParent(AppContext.BaseDirectory)!.Parent!.Parent!.Parent!.FullName;
 
         //Combine application path with where the csv file is (\Data\scrubbed.csv)
         //Should eliminate hardcoding of file path as long as it's in the \Data dir with the compiled .exe a level above
-        var filePath = Path.Combine(projectRoot, "Data", "scrubbed.csv");
+        string filePath = Path.Combine(projectRoot, "Data", "scrubbed.csv");
+        #endregion
 
         //Read all lines from file into variable        
         var lines = File.ReadAllLines(filePath);
