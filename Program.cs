@@ -6,8 +6,6 @@ class Program
 {
     static void Main(string[] args)
     {
-        //CsvFileReader.ReadFile();
-
         //Instantiate CsvFileReader object
         CsvFileReader Reader = new CsvFileReader();
         Reader.ReadFile();
