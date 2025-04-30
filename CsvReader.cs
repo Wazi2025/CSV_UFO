@@ -1,13 +1,31 @@
+using System.Globalization;
+
 public class CsvFileReader
 {
-    static public string path = @"C:\Users\Instruktor\Desktop\CSharp\CSV_UFO\scrubbed.csv";
+    static public string path = @"D:\VSCode\CSharp\CSV_UFO\scrubbed.csv";
 
     static public DateTime ConvertToDateTime(string stringDate)
     {
         DateTime result;
-        //stringDate += stringDate + ":MM/dd/yyyy";
-        //Parse string into DateTime type   
-        //Note: need to find out what the System format is         
+
+        const string dateSeparator = "/";
+        string month;
+        string day;
+        string year;
+        string temp;
+
+        temp = stringDate;
+
+        //Split the date based on dateSeparator
+        //The date in the file uses the US date style, mm/dd/yyyy
+        var split = temp.Split(dateSeparator);
+        day = split[1];
+        month = split[0];
+        year = split[2];
+
+        stringDate = day + dateSeparator + month + dateSeparator + year;
+
+        //Parse string into DateTime type           
         if (DateTime.TryParse(stringDate, out result))
         {
 
@@ -18,9 +36,27 @@ public class CsvFileReader
     static public DateOnly ConvertToDate(string stringDate)
     {
         DateOnly result;
-        stringDate = stringDate + ":MM/dd/yyyy";
+        //CultureInfo uk = new CultureInfo("en-GB");
+
+        const string dateSeparator = "/";
+        string month;
+        string day;
+        string year;
+        string temp;
+
+        temp = stringDate;
+
+        //Split the date based on dateSeparator
+        //The date in the file uses the US date style, mm/dd/yyyy
+        var split = temp.Split(dateSeparator);
+        day = split[1];
+        month = split[0];
+        year = split[2];
+
+        stringDate = day + dateSeparator + month + dateSeparator + year;
 
         //Parse string into Date type            
+        //if (DateOnly.TryParse(stringDate, uk, 0, out result))
         if (DateOnly.TryParse(stringDate, out result))
         {
 
