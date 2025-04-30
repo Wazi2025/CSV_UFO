@@ -5,7 +5,7 @@ public class CsvFileReader
     static public DateTime ConvertToDateTime(string stringDate)
     {
         DateTime result;
-
+        //stringDate += stringDate + ":MM/dd/yyyy";
         //Parse string into DateTime type   
         //Note: need to find out what the System format is         
         if (DateTime.TryParse(stringDate, out result))
@@ -18,6 +18,7 @@ public class CsvFileReader
     static public DateOnly ConvertToDate(string stringDate)
     {
         DateOnly result;
+        stringDate = stringDate + ":MM/dd/yyyy";
 
         //Parse string into Date type            
         if (DateOnly.TryParse(stringDate, out result))
