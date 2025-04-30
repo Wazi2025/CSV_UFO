@@ -2,7 +2,8 @@ using System.Globalization;
 
 public class CsvFileReader
 {
-    static public string path = @"D:\VSCode\CSharp\CSV_UFO\scrubbed.csv";
+    //static public string path = @"D:\VSCode\CSharp\CSV_UFO\scrubbed.csv";
+
 
     static public DateTime ConvertToDateTime(string stringDate)
     {
@@ -66,8 +67,15 @@ public class CsvFileReader
 
     static public void ReadFile()
     {
-        //Read all lines from file into variable
-        var lines = File.ReadAllLines(path);
+        //Set the application path
+        var projectRoot = Directory.GetParent(AppContext.BaseDirectory)!.Parent!.Parent!.Parent!.FullName;
+
+        //Combine application path with where the csv file is (\Data\scrubbed.csv)
+        //Should eliminate hardcoding of file path as long as it's in the \Data dir with the compiled .exe a level above
+        var filePath = Path.Combine(projectRoot, "Data", "scrubbed.csv");
+
+        //Read all lines from file into variable        
+        var lines = File.ReadAllLines(filePath);
 
         //Instantiate ufo object array
         UFO[] ufo = new UFO[lines.Length];
