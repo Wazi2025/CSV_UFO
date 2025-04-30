@@ -1,0 +1,1 @@
+A program that reads a .csv file into a variable and adds the different file "values/fields" into the corresponding UFO object's property. Made this mainly to familiarize myself with file handling/reading
