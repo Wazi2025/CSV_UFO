@@ -6,12 +6,24 @@ public class CsvFileReader
     {
         DateTime result;
 
-        //Parse string into DateTime type            
+        //Parse string into DateTime type   
+        //Note: need to find out what the System format is         
         if (DateTime.TryParse(stringDate, out result))
         {
 
         }
+        return result;
+    }
 
+    static public DateOnly ConvertToDate(string stringDate)
+    {
+        DateOnly result;
+
+        //Parse string into Date type            
+        if (DateOnly.TryParse(stringDate, out result))
+        {
+
+        }
         return result;
     }
 
@@ -53,7 +65,11 @@ public class CsvFileReader
             ufo[i].Shape = values[4];
 
             //Note: Only Observed, Duration_Seconds and DatePosted is actually a Date/Time value in the file
-            ufo[i].Duration_Seconds = ConvertToDateTime(values[5]);
+            //
+            //ufo[i].Duration_Seconds = ConvertToDateTime(values[5]);
+
+            //Just use a string to store seconds
+            ufo[i].Duration_Seconds = values[5];
             //Console.WriteLine($"{ufo[i].Duration_Seconds}");
 
             //ufo[i].Duration_Seconds = values[5];
@@ -64,7 +80,7 @@ public class CsvFileReader
             ufo[i].Comments = values[7];
             //ufo[i].DatePosted = values[8];
 
-            ufo[i].DatePosted = ConvertToDateTime(values[8]);
+            ufo[i].DatePosted = ConvertToDate(values[8]);
             //Console.WriteLine($"{ufo[i].DatePosted}");
 
             ufo[i].Latitude = values[9];
