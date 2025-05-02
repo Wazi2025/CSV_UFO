@@ -86,7 +86,7 @@ public class CsvFileReader
         // .exe actually is. ????)
 
         //Set the application path
-        string projectRoot = Directory.GetParent(AppContext.BaseDirectory)!.Parent!.Parent!.Parent!.FullName;
+        string projectRoot = Directory.GetParent(AppContext.BaseDirectory).Parent.Parent.Parent.FullName;
 
         //Combine application path with where the csv file is (\Data\scrubbed.csv)
         //Should eliminate hardcoding of file path as long as it's in the \Data dir with the compiled .exe a level above
