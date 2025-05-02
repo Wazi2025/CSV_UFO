@@ -9,7 +9,8 @@ public class UFO
     public string? Duration_Seconds { get; set; }
     public string? DurationHoursMinutes { get; set; }
     public string? Comments { get; set; }
-    public DateOnly DatePosted { get; set; }
+    //public DateOnly DatePosted { get; set; }
+    public DateTime DatePosted { get; set; }
     public string? Latitude { get; set; }
     public string? Longitude { get; set; }
 }
