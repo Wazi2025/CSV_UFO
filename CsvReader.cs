@@ -2,8 +2,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.Serialization;
 
-
-
 public class CsvFileReader
 {
     //static public string filePath = @"D:\VSCode\CSharp\CSV_UFO\Data\scrubbed.csv";
@@ -11,10 +9,6 @@ public class CsvFileReader
     public const string fileName = "scrubbed.csv";
     public const string fileDataDir = "Data";
     public const string fileFieldSeparator = ",";
-
-
-
-
 
     static public DateObject ConvertToDateTime(string stringDate, DateObject dateObject)
     {
@@ -34,6 +28,8 @@ public class CsvFileReader
         string[] split = temp.Split(dateSeparator);
         day = split[1];
         month = split[0];
+
+        //year also contains time since we split the string based on dateSeparator
         year = split[2];
 
         // if (year.Length > 4)
@@ -110,8 +106,9 @@ public class CsvFileReader
             //Split each value pr/line based on field separator in file (in this case, a semicolon)
             string[] values = lines[i].Split(fileFieldSeparator);
 
+            //ConvertToDateTime's return value is of type DateObject (our own Class) which has two peoperties 
+            //(DateTime and DateOnly)
             dateObject = ConvertToDateTime(values[0], dateObject);
-
             ufo[i].Observed = dateObject.DateTimeValue;
 
             //ufo[i].Observed = ConvertToDateTime(values[0]);
@@ -130,6 +127,7 @@ public class CsvFileReader
             ufo[i].DurationHoursMinutes = values[6];
             ufo[i].Comments = values[7];
 
+            //We also need to call our method here in order to set the DateOnlyValue property
             dateObject = ConvertToDateTime(values[8], dateObject);
             ufo[i].DatePosted = dateObject.DateOnlyValue;
 
