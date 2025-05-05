@@ -5,12 +5,12 @@ using System.Runtime.Serialization;
 public class CsvFileReader
 {
     //static public string filePath = @"D:\VSCode\CSharp\CSV_UFO\Data\scrubbed.csv";
-    public const string dateSeparator = "/";
-    public const string fileName = "scrubbed.csv";
-    public const string fileDataDir = "Data";
-    public const string fileFieldSeparator = ",";
+    private const string dateSeparator = "/";
+    private const string fileName = "scrubbed.csv";
+    private const string fileDataDir = "Data";
+    private const string fileFieldSeparator = ",";
 
-    static public DateObject ConvertToDateTime(string stringDate, DateObject dateObject)
+    public DateObject ConvertToDateTime(string stringDate, DateObject dateObject)
     {
         DateTime resultDateTime;
         DateOnly resultDateOnly;
@@ -32,15 +32,7 @@ public class CsvFileReader
         //year also contains time since we split the string based on dateSeparator
         year = split[2];
 
-        // if (year.Length > 4)
-        // {
-        //     string[] yearSplit = year.Split(" ");
-        //     year = yearSplit[0];
-        //     time = yearSplit[1];
-
-        //     stringDate = day + dateSeparator + month + dateSeparator + year + " " + time;
-        // }
-        // else
+        //Rearrange the stringDate adhering to European standard (dd/mm/yyyy)       
         stringDate = day + dateSeparator + month + dateSeparator + year;
 
         //Parse string into DateTime type           
@@ -77,6 +69,11 @@ public class CsvFileReader
         //Should eliminate hardcoding of file path as long as it's in the \Data dir with the compiled .exe a level above
         string filePath = Path.Combine(projectRoot, fileDataDir, fileName);
         #endregion
+
+        //Fetch CurrentCulture's date format
+        //Note: ConvertToDateTime will likely fail if it were to be run on a non-European datetype format, that is ddmmyyyy
+        //Need to check for this
+        string dateTimeFormat = CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
 
         //Read all lines from file into variable  
         //Note: This is not advisable when using extremely large files since it loads the entire file
