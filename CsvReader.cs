@@ -71,7 +71,7 @@ public class CsvFileReader
         #endregion
 
         //Fetch CurrentCulture's date format
-        //Note: ConvertToDateTime will likely fail if it were to be run on a non-European datetype format, that is ddmmyyyy
+        //Note: ConvertToDateTime will likely fail if it were to be run on a non-European datetype format machine, that is ddmmyyyy
         //Need to check for this
         string dateTimeFormat = CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
 
