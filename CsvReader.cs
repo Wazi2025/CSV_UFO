@@ -2,6 +2,8 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.Serialization;
 
+
+
 public class CsvFileReader
 {
     //static public string filePath = @"D:\VSCode\CSharp\CSV_UFO\Data\scrubbed.csv";
@@ -11,9 +13,13 @@ public class CsvFileReader
     public const string fileFieldSeparator = ",";
 
 
-    static public DateTime ConvertToDateTime(string stringDate)
+
+
+
+    static public DateObject ConvertToDateTime(string stringDate, DateObject dateObject)
     {
-        DateTime result;
+        DateTime resultDateTime;
+        DateOnly resultDateOnly;
 
         string month;
         string day;
@@ -42,40 +48,23 @@ public class CsvFileReader
         stringDate = day + dateSeparator + month + dateSeparator + year;
 
         //Parse string into DateTime type           
-        if (DateTime.TryParse(stringDate, out result))
+        if (DateTime.TryParse(stringDate, out resultDateTime))
         {
-
+            dateObject.DateTimeValue = resultDateTime;
         }
-        return result;
+
+        //If year.Length is less than 5 we know it's a DateOnly value
+        if (year.Length < 5)
+        {
+            if (DateOnly.TryParse(stringDate, out resultDateOnly))
+            {
+                dateObject.DateOnlyValue = resultDateOnly;
+            }
+        }
+
+        return dateObject;
     }
 
-    // static public DateOnly ConvertToDate(string stringDate)
-    // {
-    //     DateOnly result;
-
-    //     string month;
-    //     string day;
-    //     string year;
-    //     string temp;
-
-    //     temp = stringDate;
-
-    //     //Split the date based on dateSeparator
-    //     //The date in the file uses the US date style, mm/dd/yyyy
-    //     string[] split = temp.Split(dateSeparator);
-    //     day = split[1];
-    //     month = split[0];
-    //     year = split[2];
-
-    //     stringDate = day + dateSeparator + month + dateSeparator + year;
-
-    //     //Parse string into Date type            
-    //     if (DateOnly.TryParse(stringDate, out result))
-    //     {
-
-    //     }
-    //     return result;
-    // }
 
     public void ReadFile()
     {
@@ -99,6 +88,12 @@ public class CsvFileReader
         //In those cases File.ReadLines is a better solution
         string[] lines = File.ReadAllLines(filePath);
 
+        //Instantiate combined DateOnly and DateTime object
+        //We will use this to effectively have two return values in ConvertToDateTime, thereby allowing us to get rid of
+        //the un-sightly '00:00:00' values in the ufo.DatePosted field
+        //We could, of course simply have a ConvertToDateOnly method but where's the fun in that ;-)
+        DateObject dateObject = new DateObject();
+
         //Instantiate ufo object array
         UFO[] ufo = new UFO[lines.Length];
 
@@ -115,7 +110,11 @@ public class CsvFileReader
             //Split each value pr/line based on field separator in file (in this case, a semicolon)
             string[] values = lines[i].Split(fileFieldSeparator);
 
-            ufo[i].Observed = ConvertToDateTime(values[0]);
+            dateObject = ConvertToDateTime(values[0], dateObject);
+
+            ufo[i].Observed = dateObject.DateTimeValue;
+
+            //ufo[i].Observed = ConvertToDateTime(values[0]);
 
             //Add each value into the corresponding object property            
             ufo[i].City = values[1];
@@ -131,8 +130,8 @@ public class CsvFileReader
             ufo[i].DurationHoursMinutes = values[6];
             ufo[i].Comments = values[7];
 
-            //ufo[i].DatePosted = ConvertToDate(values[8]);
-            ufo[i].DatePosted = ConvertToDateTime(values[8]);
+            dateObject = ConvertToDateTime(values[8], dateObject);
+            ufo[i].DatePosted = dateObject.DateOnlyValue;
 
             ufo[i].Latitude = values[9];
             ufo[i].Longitude = values[10];
