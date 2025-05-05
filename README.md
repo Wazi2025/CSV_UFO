@@ -1,2 +1,2 @@
-A program that reads a .csv file into a variable and adds the different file "values/fields" into the corresponding UFO object's properties. Made this mainly to familiarize myself with file handling/reading.
+A program that reads a .csv file into a variable and adds the different file "values/fields" into the corresponding UFO object's properties. Made this mainly to familiarize myself with file handling/reading.<br/>
 As of May 5, 2025 I have successfully implemented basically a generic function (ConvertToDateTime) that can effectively return any type of variable. I simply return a custom made object (based on a custom made Class) with different property types.
