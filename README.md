@@ -1,4 +1,4 @@
-# Project "CSV_UFO AKA 'The X-Files" 
+# Project "CSV_UFO AKA *The X-Files*" 
 
 A program that reads a .csv file into a variable and adds the different file "values/fields" into the corresponding UFO object's properties. <br>Made this mainly to familiarize myself with file handling/reading.<br/>
 Implemented a generic function (ConvertToDateTime) that can effectively return any type of variable by simply returning a custom made object (based on a custom made Class) with different property types.
